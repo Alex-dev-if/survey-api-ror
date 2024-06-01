@@ -13,6 +13,7 @@ class GraphqlController < ApplicationController
     context = {
       # Query context goes here, for example:
       current_user: current_user
+
     }
     result = SurveyApiSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -23,13 +24,13 @@ class GraphqlController < ApplicationController
 
   private
 
+  
   def current_user
     return nil if request.headers['Authorization'].blank?
     token = request.headers['Authorization'].split(" ").last
     return nil if token.blank?
-    JsonWebToken.decode_token(token)
-  rescue ActiveSupport::MessageVerifier::InvalidSignature
-    nil
+    user = JsonWebToken.decode_token(token)
+    user = User.find(user[0]["user_id"]) unless user.nil?
   end
 
   # Handle variables in form data, JSON body, or a blank value

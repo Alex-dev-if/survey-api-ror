@@ -7,10 +7,10 @@ class User::Creator < ApplicationServices
   def call
     create_user
   end
-
+  
   def create_user
     ActiveRecord::Base.transaction do
-      @user = User.new(@arguments)
+      user = User.new(@arguments)
     end 
   end
 end

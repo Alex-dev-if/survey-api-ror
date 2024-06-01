@@ -2,16 +2,19 @@
 
 module Types
   class QueryType < Types::BaseObject
-    field :users, [Types::UserType], null: false
 
-    def users
-      User.all
+    field :forms, resolver: Resolvers::UserForms
+    field :form, resolver: Resolvers::GetForm
+    field :questions, resolver: Resolvers::FormQuestions
+    field :opened_forms, resolver: Resolvers::OpenedForms
+
+    field :user, UserType, null: true do
+      argument :id, ID, required: true
     end
 
-    field :current_user, String, null: false
-
-    def current_user
-      context[:current_user] || "guest"
+    def user(id:)
+      ::User.find(id)
     end
+
   end
 end

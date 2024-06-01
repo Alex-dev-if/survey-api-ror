@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module Types
-  class UserType < Types::BaseObject
+  class AnswerType < Types::BaseObject
     field :id, ID, null: false
-    field :username, String
-    field :password_digest, String
-    field :role, String
-    field :forms, FormType.connection_type, null: false
+    field :content, GraphQL::Types::JSON
+    field :user_id, Integer
+    field :question_id, Integer, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
-
   end
 end

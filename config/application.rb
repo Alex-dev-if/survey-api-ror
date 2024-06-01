@@ -26,5 +26,8 @@ module SurveyApi
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
     config.api_only = true
+
+    config.time_zone = 'Brasilia'
+
   end
 end

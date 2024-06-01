@@ -12,9 +12,13 @@ class JsonWebToken
   end
 
   def self.decode_token(token)
-    JWT.decode(token, secret_key, true, algorithm: 'HS256')
-  rescue JWT::VerificationError, JWT::DecodeError
-    nil
+    begin
+      JWT.decode(token, secret_key, true, algorithm: 'HS256')
+    rescue JWT::ExpiredSignature
+      raise GraphQL::ExecutionError, "Session expired"
+    rescue JWT::VerificationError, JWT::DecodeError => e
+      raise GraphQL::ExecutionError, "Token verification failed: #{e.message}"
+    end
   end
 
 end

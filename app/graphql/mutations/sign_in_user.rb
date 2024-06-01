@@ -1,9 +1,8 @@
 module Mutations
   class SignInUser < BaseMutation
 
-    graphql_name "signInUser"
 
-    argument :credentials, Types::AuthProviderCredentialsInput, required: false
+    argument :credentials, Types::AuthProviderCredentialsInput, required: true
 
     field :token, String, null: true
     field :user, Types::UserType, null: true
@@ -11,12 +10,15 @@ module Mutations
 
     def resolve(credentials: nil)
       return unless credentials
-      
-      user = User.find_by username: credentials[:username]
-      return {errors: 'username or password is incorrect'} unless user.authenticate(credentials[:password])
 
-      token = JsonWebToken.encode_token({user_id: user.id, role: user.role})
-      { user: user, token: token, errors: ''}
+      user = User.find_by username: credentials[:username]
+
+      if user.present? && user.authenticate(credentials[:password])
+        token = JsonWebToken.encode_token({user_id: user.id, role: user.role})
+        {user: user, token: token}
+      else
+        {errors: 'username or password is incorrect'} 
+      end
     end
   end
 end
