@@ -3,13 +3,9 @@ class Form < ApplicationRecord
   has_many :questions, dependent: :delete_all
 
   def permit_reply
-    if respond_until.nil?
-      true
-    elsif DateTime.current > respond_until
-      false
-    else
-      true
-    end
+    return true if respond_until.nil?
+    return false if DateTime.current > respond_until
+    true
   end
 
   def questions_quantity

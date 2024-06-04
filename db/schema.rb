@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_27_200923) do
 
   create_table "answers", force: :cascade do |t|
     t.jsonb "content"
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.bigint "question_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

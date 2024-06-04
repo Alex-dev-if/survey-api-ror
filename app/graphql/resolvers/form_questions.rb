@@ -7,6 +7,9 @@ module Resolvers
     type [Types::QuestionType], null: false
 
     def resolve(args)
+      form = Form.find args[:form_id]
+      auth(:manage, form)
+
       ::Question.where(args)
     end
   end

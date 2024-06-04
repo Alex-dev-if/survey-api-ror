@@ -12,6 +12,7 @@ class Question::Updater < ApplicationServices
     ActiveRecord::Base.transaction do
       question = Question.find @arguments[:id]
       question.update!(@arguments)
-    end 
+      question
+    end
   end
 end

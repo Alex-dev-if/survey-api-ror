@@ -10,7 +10,7 @@ class Question::Creator < ApplicationServices
 
   def create_question
     ActiveRecord::Base.transaction do
-      question = Question.create!(@arguments)
+      question = Question.new(@arguments)
     end 
   end
 end

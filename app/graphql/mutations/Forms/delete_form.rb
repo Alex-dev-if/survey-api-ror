@@ -4,21 +4,15 @@ module Mutations
 
       argument :id, ID, required: true
       
-      field :sucess, Boolean, null: true
-      field :errors, [String], null: true
-
       def resolve(id:)
 
-        authorize! :delete, Form
-
         form = Form::Deleter.call(id)
+        auth(:delete, form)
         
-        if context[:current_user] != form.user
-          {errors: ["You aren't authorized because you are not the owner"]} 
-        elsif form.destroyed?
-          {sucess: true}
+        if form.destroyed?
+          {success: true}
         else
-          {sucess: false, errors: ["Could not delete"]}
+          raise GraphQL::ExecutionError, form.errors.full_messages.join(", ")
         end
       end
     end

@@ -3,18 +3,15 @@
 module Types
   class QueryType < Types::BaseObject
 
-    field :forms, resolver: Resolvers::UserForms
-    field :form, resolver: Resolvers::GetForm
-    field :questions, resolver: Resolvers::FormQuestions
+    field :form_and_questions, resolver: Resolvers::FormAndQuestions
+    field :form_answers_quantity, resolver: Resolvers::FormAnswersQuantity
+    field :form_answers, resolver: Resolvers::FormAnswers
+    field :form_questions, resolver: Resolvers::FormQuestions
     field :opened_forms, resolver: Resolvers::OpenedForms
-
-    field :user, UserType, null: true do
-      argument :id, ID, required: true
-    end
-
-    def user(id:)
-      ::User.find(id)
-    end
+    field :question_and_answers, resolver: Resolvers::QuestionAndAnswers
+    field :user_and_forms, resolver: Resolvers::UserAndForms
+    field :user_answers, resolver: Resolvers::UserAnswers
+    field :user_forms, resolver: Resolvers::UserForms
 
   end
 end

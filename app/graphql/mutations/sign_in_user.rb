@@ -6,7 +6,6 @@ module Mutations
 
     field :token, String, null: true
     field :user, Types::UserType, null: true
-    field :errors, String, null: true
 
     def resolve(credentials: nil)
       return unless credentials
@@ -14,10 +13,10 @@ module Mutations
       user = User.find_by username: credentials[:username]
 
       if user.present? && user.authenticate(credentials[:password])
-        token = JsonWebToken.encode_token({user_id: user.id, role: user.role})
+        token = JsonWebToken.encode_token({user_id: user.id})
         {user: user, token: token}
       else
-        {errors: 'username or password is incorrect'} 
+        raise GraphQL::ExecutionError, 'username or password is incorrect'
       end
     end
   end

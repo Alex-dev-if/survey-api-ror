@@ -4,31 +4,19 @@ module Mutations
       
       input_object_class Types::Arguments::Question::UpdateQuestionArguments
     
-      field :errors, [String], null: true
       field :question, Types::QuestionType, null: true
 
       def resolve(args)
 
-        authorize! :update, Question
-
-        question = Question.find args[:id]
-        form = Form.find question.form_id
-        authorize! :update, form
-
+        auth(:update, Question, args[:id])
+        
         question = Question::Updater.call(args)
-        question.rearrange(question.order)
+        question.rearrange
 
-        test = Question.new(args)
-        if context[:current_user] != form.user
-          {errors: ["You aren't authorized because are not the owner"]} 
-        elsif test.valid?(:question_without_form)
-          if question.update(args)
-            {question: question}
-          else
-            {errors: question.errors.full_messages}
-          end
+        if question.update(args)
+          {question: question}
         else
-          {errors: test.errors.full_messages}      
+          raise GraphQL::ExecutionError, question.errors.full_messages.join(", ")
         end
       end
     end

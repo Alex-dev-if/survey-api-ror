@@ -4,22 +4,16 @@ module Mutations
 
       argument :id, ID, required: true
     
-      field :errors, [String], null: true
-      field :sucess, Boolean, null: true
-
       def resolve(id:)
 
-
-        question = Question.find id
-
-        authorize! :delete, question
+        auth(:delete, Question, id)
 
         question = Question::Deleter.call(id)
 
         if question.destroyed?
-          {sucess: true}
+          {success: true}
         else
-          {sucess: false, errors: ["Could not delete"]}
+          raise GraphQL::ExecutionError, question.errors.full_messages.join(", ")
         end
         
       end

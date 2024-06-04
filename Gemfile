@@ -37,6 +37,14 @@ gem "rack-cors"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "rspec-rails", "~> 6.1"
+  gem "factory_bot_rails", "~> 6.4"
+  gem "faker"
+  gem "httpparty", "~> 0.2.0"
+  gem "shoulda-matchers", "~> 6.2"
+  gem "database_cleaner", "~> 2.0"
+  gem "database_cleaner-active_record", "~> 2.1"
+  gem "email_spec", "~> 2.2"
 end
 
 group :development do
@@ -46,7 +54,6 @@ group :development do
   # gem "spring"
   gem "graphql", "~> 2.3"
   gem "graphiql-rails"
-  gem "faker"
 end
 
 gem 'jwt'
@@ -54,3 +61,8 @@ gem 'jwt'
 gem 'bcrypt', "~> 3.1.7"
 
 gem 'cancancan'
+
+
+
+
+

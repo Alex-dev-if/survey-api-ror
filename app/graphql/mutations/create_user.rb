@@ -4,16 +4,14 @@ module Mutations
   
     argument :credentials, Types::AuthProviderCredentialsInput, required: true
 
-    field :errors, [String], null: true
     field :user, Types::UserType, null: true
 
     def resolve(credentials: nil)
       user = User::Creator.call(credentials)
-
       if user.save
-        {user: user}
+        {user: user, success: true}
       else
-        {errors: user.errors.full_messages}      
+        raise GraphQL::ExecutionError, user.errors.full_messages.join(", ")
       end
     end
   end

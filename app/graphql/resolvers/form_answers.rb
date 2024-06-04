@@ -1,17 +1,17 @@
 module Resolvers
   class FormAnswers < BaseResolver
-    description 'Search all answers for a form and the quantity of answers'
+    description 'Search all answers for a form'
 
     argument :form_id, ID, required: true
 
-    field :answers, [Types::AnswerType], null: false
-    field :answers_quantity, Integer, null: false
+    type [Types::AnswerType], null: false
 
-    def resolve(args)
-      answers = ::Answer.where(args)
-      answers_quantity = ::Answer.where(args).count
+    def resolve(form_id:)
+      form = Form.find form_id
+      auth(:manage, form)
 
-      {answers: answers, answers_quantity: answers_quantity}
+      form.questions.flat_map(&:answers)
+
     end
   end
 end

@@ -1,6 +1,6 @@
 module Resolvers
   class UserForms < BaseResolver
-    description 'Search all forms for a user'
+    description 'Search forms for a user'
 
 
     type [Types::FormType], null: false
