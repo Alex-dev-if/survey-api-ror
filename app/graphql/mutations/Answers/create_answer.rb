@@ -21,7 +21,6 @@ module Mutations
             errors << answer_errors
           end
         end
-        
         {answers: saved_answers, errors: errors}
 
       end
