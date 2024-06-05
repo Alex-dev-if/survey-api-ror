@@ -1,21 +1,29 @@
 module Mutations
   module Answers
     class CreateAnswer < BaseMutation
-      input_object_class Types::Arguments::CreateAnswerArguments
+      argument :answers, [Types::Arguments::CreateAnswerArguments], required: true
     
-      field :answer, Types::AnswerType, null: true
-
+      field :answers, [Types::AnswerType], null: true
+      field :errors, [String], null: true
       def resolve(args)
-        authorize! :create, Answer
-        args[:user_id] = context[:current_user].id unless context[:current_user].nil?
+        user_id = context[:current_user].id unless context[:current_user].nil?
 
-        answer = Answer::Creator.call(args)
+        answers = Answer::Creator.call(args, user_id)
 
-        if answer.save
-          {answer: answer}
-        else
-          raise GraphQL::ExecutionError, answer.errors.full_messages.join(", ")
+        saved_answers = []
+        errors = []
+        answers.each_with_index do |answer, idx|
+          if answer.save
+             saved_answers << answer
+          else
+            answer_errors = answer.errors.full_messages.join(", ")
+            answer_errors = "answer #{idx+1}: #{answer_errors}"
+            errors << answer_errors
+          end
         end
+        
+        {answers: saved_answers, errors: errors}
+
       end
     end
   end

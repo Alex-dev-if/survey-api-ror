@@ -2,10 +2,11 @@ class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user, optional: true
 
+  validate :content_type
+
   validates :content, length: {is: 1, message: "can only have one option to be checked"}, if: :radio_type?
   validates :content, length: {maximum: :options_quantity, too_long: "Content is too long (maximum is 2 options)"}, unless: [:text_type?, :radio_type?] 
 
-  validate :content_type
   validate :no_repeat, unless: [:text_type?, :radio_type?] 
   validate :permit_create
 
