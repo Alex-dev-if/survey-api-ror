@@ -2,6 +2,7 @@ class Question < ApplicationRecord
 
   belongs_to :form
   has_many :answers, dependent: :delete_all
+  self.implicit_order_column = "order"
 
   enum question_type: %i[text radio checkbox]
 
@@ -30,8 +31,9 @@ class Question < ApplicationRecord
     if previously_new_record?
       create_rearrange
     elsif saved_change_to_order?
-      puts "cheguei aqui"
       update_rearrange
+    elsif destroyed?
+      delete_rearrange
     end
   end
 
@@ -47,6 +49,11 @@ class Question < ApplicationRecord
     elsif previous_order < order # caso inverso
       form.questions.where('"order" between ? and ?', previous_order, order).where.not(id: id).update_all('"order" = "order" - 1')
     end
+  end
+
+  def delete_rearrange
+    return unless order != form.questions_quantity
+    form.questions.where('"order" >= ?', order).update_all('"order" = "order" - 1') 
   end
 
 end

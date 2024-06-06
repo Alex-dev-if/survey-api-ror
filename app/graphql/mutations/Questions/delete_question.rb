@@ -11,6 +11,7 @@ module Mutations
         question = Question::Deleter.call(id)
 
         if question.destroyed?
+          question.rearrange
           {success: true}
         else
           raise GraphQL::ExecutionError, question.errors.full_messages.join(", ")
