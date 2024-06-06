@@ -12,6 +12,7 @@ module Mutations
         question = Question::Creator.call(args)
 
         if question.save(context: :question_without_form)
+          question.rearrange
           {question: question}
         else
           raise GraphQL::ExecutionError, question.errors.full_messages.join(", ")
