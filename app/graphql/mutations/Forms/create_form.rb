@@ -12,13 +12,8 @@ module Mutations
         
         args[:user_id] = context[:current_user].id
 
-        form = Form::Creator.call(args)
+        Form::Creator.call(args)
 
-        if form.save
-          {form: form}
-        else
-          raise GraphQL::ExecutionError, form.errors.full_messages.join(", ")
-        end
       end
     end
   end

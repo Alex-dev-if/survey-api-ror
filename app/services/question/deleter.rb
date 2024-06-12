@@ -5,12 +5,19 @@ class Question::Deleter < ApplicationServices
   end
 
   def call
-    delete_question
+    question = delete_question
+
+    if question.destroyed?
+      question.rearrange
+      {success: true}
+    else
+      {success: false}
+    end
   end
 
   def delete_question
-    ActiveRecord::Base.transaction do
-      Question.find(@id).destroy!
-    end 
+    question = Question.find(@id).destroy!
+    rescue ActiveRecord::RecordNotFound => e
+      raise GraphQL::ExecutionError, e
   end
 end

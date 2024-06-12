@@ -1,13 +1,14 @@
 class Answer::Creator < ApplicationServices
 
-  def initialize(arguments, form_id, user)
-    user_id = user.id unless user.nil?
+  def initialize(args)
 
-    @answers = arguments[:answers].map do |answer|
+    user_id = args[:user_id]
+
+    @answers = args[:answers].map do |answer|
       answer = answer.to_h.merge(user_id: user_id)
     end
 
-    @form = Form.find(form_id)
+    @form = Form.find(args[:form_id])
   
     @errors = []
 
@@ -17,7 +18,13 @@ class Answer::Creator < ApplicationServices
 
   def call
     create_answer
-    {answers: @answers, errors: @errors}
+
+    if @errors.blank?
+      {answers: @answers}
+    else
+      {errors: @errors}
+    end
+
   end
 
   def create_answer 

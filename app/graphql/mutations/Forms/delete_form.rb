@@ -5,15 +5,13 @@ module Mutations
       argument :id, ID, required: true
       
       def resolve(id:)
-
-        form = Form::Deleter.call(id)
-        auth(:delete, form)
         
-        if form.destroyed?
-          {success: true}
-        else
-          raise GraphQL::ExecutionError, form.errors.full_messages.join(", ")
-        end
+        form = Form.find id
+
+        auth(:delete, form)
+
+        Form::Deleter.call(form.id)
+        
       end
     end
   end

@@ -30,7 +30,7 @@ RSpec.describe "#SignInUser mutation" do
       password: user.password
     })
 
-    expect(result.dig("errors", 0, "message")).to include("username or password is incorrect")
+    expect(result.dig("errors", 0, "message")).to include("couldn't find user with username \"#{username}\"")
     expect(result.dig("data", "signInUser")).to be_nil
   end
 
@@ -42,7 +42,7 @@ RSpec.describe "#SignInUser mutation" do
       password:  "incorrect_password"
     })
 
-    expect(result.dig("errors", 0, "message")).to include("username or password is incorrect")
+    expect(result.dig("errors", 0, "message")).to include("incorrect password")
     expect(result.dig("data", "signInUser")).to be_nil
   end
 

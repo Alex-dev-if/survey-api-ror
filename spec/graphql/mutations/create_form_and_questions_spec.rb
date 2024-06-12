@@ -36,6 +36,15 @@ RSpec.describe "#CreateFormAndQuestion mutation" do
     expect(result.dig("data", "createFormAndQuestions", "questions", 0, "options")).to eq(question.options)    
     expect(result.dig("data", "createFormAndQuestions", "questions", 0, "order")).to eq(question.order)    
     expect(result.dig("data", "createFormAndQuestions", "questions", 0, "questionType")).to eq(question.question_type)
+    
+    expect(result.dig("data", "createFormAndQuestions", "questions", 1, "title")).to eq(question.title)    
+    expect(result.dig("data", "createFormAndQuestions", "questions", 1, "required")).to eq(question.required)    
+    expect(result.dig("data", "createFormAndQuestions", "questions", 1, "formId")).to eq(question.form_id)    
+    expect(result.dig("data", "createFormAndQuestions", "questions", 1, "options")).to eq(question.options)    
+    expect(result.dig("data", "createFormAndQuestions", "questions", 1, "order")).to eq(question.order)    
+    expect(result.dig("data", "createFormAndQuestions", "questions", 1, "questionType")).to eq(question.question_type)
+
+    puts result.inspect
 
   end
 
@@ -51,9 +60,13 @@ RSpec.describe "#CreateFormAndQuestion mutation" do
                   {title: $title_question, order: $order, 
                   required: $required, questionType: $question_type, 
                   options: $options},
+                  {title: $title_question, order: $order, 
+                  required: $required, questionType: $question_type, 
+                  options: $options}
               ]
             }
         ) {
+            errors
             form {
                 createdAt
                 id

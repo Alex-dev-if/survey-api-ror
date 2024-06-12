@@ -11,14 +11,8 @@ module Mutations
         form = Form.find args[:id]
         auth(:update, form)
 
-        form = Form::Updater.call(args)
+        Form::Updater.call(args)
 
-
-        if form.update!(args)
-          {form: form}
-        else
-          raise GraphQL::ExecutionError, form.errors.full_messages.join(", ")
-        end
       end
     end
   end

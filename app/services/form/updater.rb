@@ -1,18 +1,23 @@
 class Form::Updater < ApplicationServices
 
-  def initialize(arguments)
-    @arguments = arguments
+  def initialize(args)
+    @args = args
   end
 
   def call
-    update_form
+    form = find_form
+
+    if form.update!(@args)
+      {form: form}
+    else
+      raise GraphQL::ExecutionError, form.errors.full_messages.join(", ")
+    end
+    
   end
 
-  def update_form
-    ActiveRecord::Base.transaction do
-      form = Form.find @arguments[:id]
-      form.update!(@arguments)
-      form
-    end 
+  def find_form
+    form = Form.find @args[:id]
+    rescue ActiveRecord::RecordNotFound => e
+      raise GraphQL::ExecutionError, e
   end
 end

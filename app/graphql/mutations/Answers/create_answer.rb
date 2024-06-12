@@ -9,13 +9,9 @@ module Mutations
 
       def resolve(args)
 
-        result = Answer::Creator.call(args, args[:form_id], context[:current_user])
+        args[:user_id] = context[:current_user].id unless context[:current_user].nil?
+        Answer::Creator.call(args)
 
-        if result[:errors].blank?
-          {answers: result[:answers]}
-        else
-          {errors: result[:errors]}
-        end
       end
     end
   end
