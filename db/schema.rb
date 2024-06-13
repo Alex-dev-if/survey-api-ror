@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_05_145546) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_13_180133) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_05_145546) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.bigint "form_id", null: false
+    t.index ["form_id"], name: "index_answers_on_form_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
@@ -54,6 +56,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_05_145546) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "answers", "forms"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "forms", "users"

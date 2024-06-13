@@ -12,6 +12,7 @@ module Types
     field :user_and_forms, resolver: Resolvers::UserAndForms
     field :user_answers, resolver: Resolvers::UserAnswers
     field :user_forms, resolver: Resolvers::UserForms
+    field :results, resolver: Resolvers::Results
 
   end
 end

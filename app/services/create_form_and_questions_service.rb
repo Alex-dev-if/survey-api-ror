@@ -15,7 +15,6 @@ class CreateFormAndQuestionsService < ApplicationServices
     if @errors.blank?
       {form: @form, questions: @questions}
     else
-      puts @errors
       {errors: @errors}
     end
   end
@@ -35,20 +34,19 @@ class CreateFormAndQuestionsService < ApplicationServices
   end
   
   def questions_instances
-    @questions.each_with_index do |question, idx|
-      question = Question.new(question.to_h)
-      @questions[idx] = question
-      question.valid?
+    if @errors.blank? # Se o formulário não possuir erros execute:
+      @questions.each_with_index do |question, idx|
+        question = Question.new(question.to_h.merge(order: idx+1))
+        @questions[idx] = question
+        
+        question.valid?
 
-      unless question.order <= @questions.count
-        question.errors.add(:base, "order greather than number of questions")
-      end
-
-      question.errors.delete(:form, :blank)
-      
-      if question.errors.any?
-        error = question.errors.full_messages.join(", ")
-        @errors << "question #{idx+1}: #{error}"
+        question.errors.delete(:form, :blank)
+        
+        if question.errors.any?
+          error = question.errors.full_messages.join(", ")
+          @errors << "question #{idx+1}: #{error}"
+        end
       end
     end
   end
@@ -64,5 +62,4 @@ class CreateFormAndQuestionsService < ApplicationServices
       end
     end
   end
-
 end
