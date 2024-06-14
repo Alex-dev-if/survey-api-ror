@@ -1,6 +1,7 @@
 class Form < ApplicationRecord
   belongs_to :user
   has_many :questions, dependent: :delete_all
+  has_many :answers, dependent: :delete_all
 
   include Opened
 
@@ -13,5 +14,4 @@ class Form < ApplicationRecord
   def questions_quantity
     questions.size
   end
-
 end

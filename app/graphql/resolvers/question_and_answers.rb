@@ -8,6 +8,8 @@ module Resolvers
     def resolve(id:)
       auth(:manage, Question, id)
       ::Question.find id
+    rescue ActiveRecord::RecordNotFound => e
+      raise GraphQL::ExecutionError, e
     end
   end
 end

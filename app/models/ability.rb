@@ -10,10 +10,6 @@ class Ability
       can :update, Question
       can :manage, Question
       can [:update, :delete, :manage], Form, user: user
-      can :update, Answer
-    else
-      can :read, :all
-      can [:create, :update], Answer
     end
     
   end

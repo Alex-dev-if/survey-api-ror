@@ -8,6 +8,7 @@ module Types
     field :respond_until, GraphQL::Types::ISO8601DateTime
     field :opened, Boolean
     field :questions, QuestionType.connection_type, null: false
+    field :answers, AnswerType.connection_type, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end

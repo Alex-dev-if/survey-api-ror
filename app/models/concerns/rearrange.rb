@@ -1,8 +1,7 @@
 module Rearrange 
   extend ActiveSupport::Concern
-
-  def rearrange #rearranjando a ordem quando o user cria ou atualiza uma questão (exceto se cria junto com o formulário)
-    
+  #rearranjando a ordem quando o user cria ou atualiza uma questão (exceto se cria junto com o formulário)
+  def rearrange
     if previously_new_record?
       create_rearrange
     elsif saved_change_to_order?

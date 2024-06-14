@@ -8,6 +8,7 @@ class Question::Creator < ApplicationServices
     question = create_question
 
     if question.save(context: :question_without_form)
+      # rearranjando a order 
       question.rearrange
       {question: question}
     else

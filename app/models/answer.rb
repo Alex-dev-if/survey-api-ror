@@ -1,6 +1,7 @@
 class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user, optional: true
+  belongs_to :form
 
 
   validates :content, length: {in: 0..1, message: "can only have one option to be checked"}, if: -> {question.radio? && content.is_a?(Array)}
@@ -16,7 +17,6 @@ class Answer < ApplicationRecord
   end
 
   def permit_create
-    form = Form.find question.form_id
     errors.add(:base, "response time expired") unless form.permit_reply
   end
 

@@ -10,13 +10,11 @@ module Mutations
     field :errors, [String], null: true
 
     def resolve(args)
-
       auth(:create, Form)
 
       args[:form] = args[:form].to_h.merge(user_id: context[:current_user].id)
       
       CreateFormAndQuestionsService.call(args[:form], args[:questions])
-
     end
   end
 end

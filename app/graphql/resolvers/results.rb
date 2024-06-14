@@ -27,6 +27,9 @@ module Resolvers
       end
 
       result
+
+    rescue ActiveRecord::RecordNotFound => e
+      raise GraphQL::ExecutionError, e
     end
   end
 end

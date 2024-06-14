@@ -34,18 +34,15 @@ RSpec.describe "#CreateFormAndQuestion mutation" do
     expect(result.dig("data", "createFormAndQuestions", "questions", 0, "required")).to eq(question.required)    
     expect(result.dig("data", "createFormAndQuestions", "questions", 0, "formId")).to eq(question.form_id)    
     expect(result.dig("data", "createFormAndQuestions", "questions", 0, "options")).to eq(question.options)    
-    expect(result.dig("data", "createFormAndQuestions", "questions", 0, "order")).to eq(question.order)    
+    expect(result.dig("data", "createFormAndQuestions", "questions", 0, "order")).to eq(1)    
     expect(result.dig("data", "createFormAndQuestions", "questions", 0, "questionType")).to eq(question.question_type)
-    
+      
     expect(result.dig("data", "createFormAndQuestions", "questions", 1, "title")).to eq(question.title)    
     expect(result.dig("data", "createFormAndQuestions", "questions", 1, "required")).to eq(question.required)    
     expect(result.dig("data", "createFormAndQuestions", "questions", 1, "formId")).to eq(question.form_id)    
     expect(result.dig("data", "createFormAndQuestions", "questions", 1, "options")).to eq(question.options)    
-    expect(result.dig("data", "createFormAndQuestions", "questions", 1, "order")).to eq(question.order)    
+    expect(result.dig("data", "createFormAndQuestions", "questions", 1, "order")).to eq(2)    
     expect(result.dig("data", "createFormAndQuestions", "questions", 1, "questionType")).to eq(question.question_type)
-
-    puts result.inspect
-
   end
 
 
@@ -53,14 +50,14 @@ RSpec.describe "#CreateFormAndQuestion mutation" do
     <<~GQL
       mutation CreateFormAndQuestions ($title: String!, $opened: Boolean!, 
       $respond_until: ISO8601DateTime, $title_question: String!, $required: Boolean!,
-      $options: [String!], $order: Int!, $question_type: String!) {
+      $options: [String!], $question_type: String!) {
         createFormAndQuestions(
             input: { form: { title: $title, opened: $opened, respondUntil: $respond_until }, 
               questions: [
-                  {title: $title_question, order: $order, 
+                  {title: $title_question,
                   required: $required, questionType: $question_type, 
                   options: $options},
-                  {title: $title_question, order: $order, 
+                  {title: $title_question,
                   required: $required, questionType: $question_type, 
                   options: $options}
               ]

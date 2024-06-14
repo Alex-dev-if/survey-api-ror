@@ -8,10 +8,9 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(args)
-
-        args[:user_id] = context[:current_user].id unless context[:current_user].nil?
+        # passando o user_id se existir
+        args[:user_id] = context[:current_user].id unless context[:current_user].nil? 
         Answer::Creator.call(args)
-
       end
     end
   end

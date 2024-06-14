@@ -3,7 +3,7 @@ FactoryBot.define do
     id { 1 }
     title {Faker::Lorem.question }
     required {[true, false].sample}
-    options { Faker::Lorem.words(number: 4) }
+    options { Faker::Lorem.words(number: 5 ) }
     order { 1 }
     question_type { "radio" }
     association :form

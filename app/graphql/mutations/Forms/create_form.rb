@@ -7,13 +7,11 @@ module Mutations
       field :form, Types::FormType, null: true
 
       def resolve(args)
-
         auth(:create, Form)
         
         args[:user_id] = context[:current_user].id
 
         Form::Creator.call(args)
-
       end
     end
   end

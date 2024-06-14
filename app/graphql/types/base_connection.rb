@@ -6,7 +6,7 @@ module Types
     include GraphQL::Types::Relay::ConnectionBehaviors
 
     field :record_count, Integer
-
+    # quantidade de elementos filho
     def record_count
       object.items.size
     end

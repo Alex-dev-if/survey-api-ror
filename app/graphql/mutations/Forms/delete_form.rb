@@ -5,13 +5,11 @@ module Mutations
       argument :id, ID, required: true
       
       def resolve(id:)
-        
         form = Form.find id
 
         auth(:delete, form)
 
         Form::Deleter.call(form.id)
-        
       end
     end
   end

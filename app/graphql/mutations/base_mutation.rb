@@ -14,6 +14,7 @@ module Mutations
     def auth(action, object, id=nil)
       if object == Question
         authorize! action, object
+        # É passado o id do form ou da questão a depender do contexto da mutations
         form = action == :create ? Form.find(id) : Form.find(Question.find(id).form_id)
         authorize! :update, form
       else

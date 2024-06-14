@@ -4,6 +4,7 @@ FactoryBot.define do
     association :question
     id {1}
     association :user
+    association :form
     
 
   end

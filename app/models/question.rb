@@ -15,8 +15,9 @@ class Question < ApplicationRecord
   include Rearrange
 
   def order_validation
+    #verificando se a ordem não é maior que o número de questões do form
     if new_record?
-      if order > form.questions_quantity+1 #verificando se a ordem não é maior que o número de questões do form
+      if order > form.questions_quantity+1 
         errors.add(:order, "must be less than or equal to #{form.questions_quantity+1}")
       end
     elsif order > form.questions_quantity
@@ -27,6 +28,4 @@ class Question < ApplicationRecord
   def permit_create
     errors.add(:base, "maximum limit of ten questions per form") if form.questions_quantity >= 10
   end
-  
-  
 end

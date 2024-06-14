@@ -1,7 +1,6 @@
 module Resolvers
-  class UserAndForms < BaseResolver
-    description 'An user, your forms, quantity of forms'
-
+  class UserAndItems < BaseResolver
+    description 'An user, your items(forms or answers), quantity of items'
 
     type Types::UserType, null: false
 

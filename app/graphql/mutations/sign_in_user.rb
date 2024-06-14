@@ -8,10 +8,7 @@ module Mutations
     field :user, Types::UserType, null: true
 
     def resolve(credentials:)
-      return unless credentials
-
       User::SignInUser.call(credentials[:username], credentials[:password])
-
     end
   end
 end

@@ -5,8 +5,7 @@ module Resolvers
     type [Types::FormType], null: false
 
     def resolve()
-      user = context[:current_user]
-      user.forms.opened
+      context[:current_user].forms.opened
     end
   end
 end

@@ -5,7 +5,7 @@ module Resolvers
     def auth(action, object, id=nil)
       if object == Question
         authorize! :manage, Question
-        form = Form.find(Question.find(id).form_id)
+        form = Question.find(id).form
         authorize! :manage, form
       else
         authorize! action, object
