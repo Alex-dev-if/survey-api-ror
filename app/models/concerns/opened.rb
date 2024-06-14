@@ -15,6 +15,4 @@ module Opened
   def close 
     update_attribute :opened, false
   end
-
-
 end
