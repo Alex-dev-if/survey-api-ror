@@ -53,6 +53,7 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
   gem "graphql", "~> 2.3"
+  gem "graphiql-rails"
 end
 
 gem 'jwt'
