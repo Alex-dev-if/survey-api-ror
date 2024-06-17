@@ -3,7 +3,7 @@ require 'jwt'
 class JsonWebToken
 
   def self.secret_key
-    ENV['JWT_SECRET']
+    Rails.application.credentials.jwt_secret
   end
 
   def self.encode_token(payload)
