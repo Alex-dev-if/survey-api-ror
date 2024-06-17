@@ -57,13 +57,15 @@ RSpec.describe "#CreateFormAndQuestion mutation" do
                   {title: $title_question,
                   required: $required, questionType: $question_type, 
                   options: $options},
+<<<<<<< HEAD
                   {title: $title_question,
                   required: $required, questionType: $question_type, 
                   options: $options}
+=======
+>>>>>>> parent of c2c9a3a (lógica retirada das mutations e otimização dos services)
               ]
             }
         ) {
-            errors
             form {
                 createdAt
                 id

@@ -7,7 +7,12 @@ module Mutations
     field :user, Types::UserType, null: true
 
     def resolve(credentials: nil)
-      User::Creator.call(credentials)
+      user = User::Creator.call(credentials)
+      if user.save
+        {user: user, success: true}
+      else
+        raise GraphQL::ExecutionError, user.errors.full_messages.join(", ")
+      end
     end
   end
 end

@@ -11,7 +11,13 @@ module Mutations
         auth(:update, Question, args[:id])
         
         question = Question::Updater.call(args)
+        question.rearrange
 
+        if question.update(args)
+          {question: question}
+        else
+          raise GraphQL::ExecutionError, question.errors.full_messages.join(", ")
+        end
       end
     end
   end

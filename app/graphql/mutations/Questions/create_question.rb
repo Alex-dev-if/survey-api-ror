@@ -9,8 +9,14 @@ module Mutations
       def resolve(args)
 
         auth(:create, Question, args[:form_id])
-        Question::Creator.call(args)
+        question = Question::Creator.call(args)
 
+        if question.save(context: :question_without_form)
+          question.rearrange
+          {question: question}
+        else
+          raise GraphQL::ExecutionError, question.errors.full_messages.join(", ")
+        end
       end
     end
   end
