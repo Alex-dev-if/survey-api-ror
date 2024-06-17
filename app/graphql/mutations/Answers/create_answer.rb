@@ -2,9 +2,11 @@ module Mutations
   module Answers
     class CreateAnswer < BaseMutation
       argument :answers, [Types::Arguments::CreateAnswerArguments], required: true
-    
+      argument :form_id, ID, required: true
+
       field :answers, [Types::AnswerType], null: true
       field :errors, [String], null: true
+
       def resolve(args)
         # passando o user_id se existir
         args[:user_id] = context[:current_user].id unless context[:current_user].nil? 
