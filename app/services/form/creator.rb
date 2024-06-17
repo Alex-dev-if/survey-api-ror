@@ -1,20 +1,16 @@
 class Form::Creator < ApplicationServices
 
-  def initialize(args)
-    @args = args
+  def initialize(arguments)
+    @arguments = arguments
   end
 
   def call
-    form = create_form
-
-    if form.save
-      {form: form}
-    else
-      raise GraphQL::ExecutionError, form.errors.full_messages.join(", ")
-    end
+    create_form
   end
 
   def create_form
-    form = Form.new(@args)
+    ActiveRecord::Base.transaction do
+      form = Form.create!(@arguments)
+    end 
   end
 end

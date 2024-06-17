@@ -5,19 +5,12 @@ class Form::Deleter < ApplicationServices
   end
 
   def call
-    form = delete_form
-
-    if form.destroyed?
-      {form: form}
-      {success: true}
-    else
-      {success: false}
-    end
+    delete_form
   end
 
   def delete_form
-    form = Form.find(@id).destroy!
-    rescue ActiveRecord::RecordNotFound => e
-      raise GraphQL::ExecutionError, e
+    ActiveRecord::Base.transaction do
+      Form.find(@id).destroy!
+    end 
   end
 end

@@ -1,20 +1,16 @@
 class User::Creator < ApplicationServices
 
-  def initialize(args)
-    @args = args.to_hash
+  def initialize(arguments)
+    @arguments = arguments.to_hash
   end
 
   def call
-    user = create_user
-
-    if user.save
-      {user: user}
-    else
-      raise GraphQL::ExecutionError, user.errors.full_messages.join(", ")
-    end
+    create_user
   end
   
   def create_user
-    user = User.new(@args)
+    ActiveRecord::Base.transaction do
+      user = User.new(@arguments)
+    end 
   end
 end

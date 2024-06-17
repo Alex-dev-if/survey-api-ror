@@ -7,8 +7,7 @@ module Mutations
 
     field :form, Types::FormType, null: true
     field :questions, [Types::QuestionType], null: true
-    field :errors, [String], null: true
-
+    
     def resolve(args)
       auth(:create, Form)
 

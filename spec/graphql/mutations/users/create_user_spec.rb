@@ -15,6 +15,7 @@ RSpec.describe "#CreateUser mutation" do
     
     expect(result.dig("data", "createUser", "user", "role")).to eq(user.role)
     expect(result.dig("data", "createUser", "user", "username")).to eq(user.username)
+    expect(result.dig("data", "createUser", "success")).to eq(true)
     expect(result.dig("errors")).to be_nil
   end
 
