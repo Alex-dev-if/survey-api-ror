@@ -63,5 +63,3 @@ gem 'bcrypt', "~> 3.1.7"
 gem 'cancancan'
 
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
-
-gem 'sprockets-rails'
