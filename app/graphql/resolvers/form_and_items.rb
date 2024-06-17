@@ -8,6 +8,7 @@ module Resolvers
     def resolve(id:)
       form = ::Form.find id
       raise GraphQL::ExecutionError, "Response time expired" unless form.permit_reply
+      form.open
       form
 
     rescue ActiveRecord::RecordNotFound => e
