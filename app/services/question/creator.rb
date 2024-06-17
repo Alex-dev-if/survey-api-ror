@@ -1,7 +1,7 @@
 class Question::Creator < ApplicationServices
 
-  def initialize(arguments)
-    @arguments = arguments
+  def initialize(args)
+    @args = args
   end
 
   def call
@@ -18,8 +18,6 @@ class Question::Creator < ApplicationServices
   end
 
   def create_question
-    ActiveRecord::Base.transaction do
-      question = Question.new(@arguments)
-    end 
+    question = Question.new(@args)
   end
 end

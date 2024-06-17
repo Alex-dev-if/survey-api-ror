@@ -7,7 +7,6 @@ module Mutations
       def resolve(id:)
         form = Form.find id
 
-        form = Form::Deleter.call(id)
         auth(:delete, form)
 
         Form::Deleter.call(form.id)
