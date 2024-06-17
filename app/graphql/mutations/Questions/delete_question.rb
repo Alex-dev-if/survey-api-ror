@@ -8,14 +8,7 @@ module Mutations
 
         auth(:delete, Question, id)
 
-        question = Question::Deleter.call(id)
-
-        if question.destroyed?
-          question.rearrange
-          {success: true}
-        else
-          raise GraphQL::ExecutionError, question.errors.full_messages.join(", ")
-        end
+        Question::Deleter.call(id)
         
       end
     end

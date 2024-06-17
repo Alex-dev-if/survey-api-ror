@@ -1,7 +1,6 @@
 class Answer::Creator < ApplicationServices
 
-  def initialize(arguments, form_id, user)
-    user_id = user.id unless user.nil?
+  def initialize(args)
 
     @form = Form.find(args[:form_id])
     user_id = args[:user_id]
@@ -16,7 +15,13 @@ class Answer::Creator < ApplicationServices
 
   def call
     create_answer
-    {answers: @answers, errors: @errors}
+
+    if @errors.blank?
+      {answers: @answers}
+    else
+      {errors: @errors}
+    end
+
   end
 
   def create_answer 

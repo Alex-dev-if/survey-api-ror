@@ -1,5 +1,5 @@
 class Question < ApplicationRecord
-
+  
   belongs_to :form
   has_many :answers, dependent: :delete_all
   self.implicit_order_column = "order"
