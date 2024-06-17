@@ -108,8 +108,6 @@ GEM
       i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    graphiql-rails (1.10.0)
-      railties
     graphql (2.3.3)
       base64
     htmlentities (4.3.4)
@@ -255,7 +253,6 @@ DEPENDENCIES
   email_spec (~> 2.2)
   factory_bot_rails (~> 6.4)
   faker
-  graphiql-rails
   graphql (~> 2.3)
   httpparty (~> 0.2.0)
   jwt
