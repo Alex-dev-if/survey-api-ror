@@ -1,3 +1,7 @@
+# Rota para requisições post graphql
+
+* https://mysite-28nu.onrender.com/graphql
+
 # utlização json web token /graphql/concerns/json_web_token.rb
 
 ![image](https://github.com/Alex-dev-if/survey-api-ror/assets/91799263/57dc12b3-6411-4bc1-8b58-e16cad56f2a3)
