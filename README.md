@@ -4,7 +4,7 @@
 
 # utlização json web token /graphql/concerns/json_web_token.rb
 
-![image](https://github.com/Alex-dev-if/survey-api-ror/assets/91799263/57dc12b3-6411-4bc1-8b58-e16cad56f2a3)
+![image](https://github.com/Alex-dev-if/survey-api-ror/assets/91799263/f2edca69-6baf-43f3-a50d-805c96e77f10)
 
 # Módulo de authorização /graphql/concerns/authorization.rb
 
